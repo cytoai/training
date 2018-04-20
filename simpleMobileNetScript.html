@@ -35,6 +35,11 @@
 		const layer = preLoadedmodel.getLayer('conv_pw_8_relu');
 		
 		tmpModel = tf.model({inputs: preLoadedmodel.inputs, outputs: layer.output});
+		
+		for(i = 0; i<tmpModel.layers.length; i++){
+			tmpModel.layers[i].trainable = false;
+		}
+		
 		//create denselayer for class prediction
 		const dense = tf.layers.dense({
 		  units: num_classes,
@@ -54,7 +59,7 @@
 		});
 		
 		return model;
-	  }
+	}
 	async function train(model, imagewidth, imageheight){
 		for (let i = 0; i < TRAIN_BATCHES; i++) {
 			// TODO: Change function for getting trainign batch
